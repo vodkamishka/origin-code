@@ -28,13 +28,8 @@ export const notesSlice = createSlice({
             state.notes = state.notes.map(note => ({...note, read: true}))
         },
         markReadNote(state, action) {
-            const index = state.notes.findIndex(el => el.id === action.payload);
-            const note = state.notes[index];
-            state.notes = [
-                ...state.notes.slice(0, index),
-                {...note, read: true},
-                ...state.notes.slice(index+1)
-            ]
+            state.notes = state.notes.reduce((r, note) => note.id === action.payload ?
+                [...r, {...note, read: true}] : [...r, note],[]);
         }
     }
 })
